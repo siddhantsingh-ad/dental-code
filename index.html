@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SmileCare Dental</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #3b9ede;
+    --blue-light: #e8f4fd;
+    --blue-mid: #bde0f8;
+    --white: #ffffff;
+    --text-dark: #1a2533;
+    --text-mid: #4a5568;
+    --text-light: #718096;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid #e2edf7;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 6vw; height: 68px;
+  }
+  .nav-logo { font-size: 1.3rem; font-weight: 700; color: var(--blue); letter-spacing: -0.3px; }
+  .nav-logo span { color: var(--text-dark); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a { text-decoration: none; color: var(--text-mid); font-size: 0.95rem; transition: color .2s; }
+  nav ul a:hover { color: var(--blue); }
+  .nav-cta {
+    background: var(--blue); color: #fff; border: none; border-radius: 8px;
+    padding: 9px 22px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background .2s;
+  }
+  .nav-cta:hover { background: #2a8dcf; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 88vh;
+    background: linear-gradient(135deg, #f0f8ff 0%, #e0f2fe 60%, #bae6fd 100%);
+    display: flex; align-items: center;
+    padding: 6rem 6vw;
+    gap: 4rem;
+  }
+  .hero-text { flex: 1; max-width: 560px; }
+  .hero-badge {
+    display: inline-block;
+    background: var(--blue-mid); color: #1458a0;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: .6px;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 1.4rem; text-transform: uppercase;
+  }
+  .hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.2; color: var(--text-dark); margin-bottom: 1.2rem; }
+  .hero h1 span { color: var(--blue); }
+  .hero p { font-size: 1.05rem; color: var(--text-mid); margin-bottom: 2rem; max-width: 440px; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--blue); color: #fff; border: none; border-radius: 8px;
+    padding: 13px 28px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background .2s;
+  }
+  .btn-primary:hover { background: #2a8dcf; }
+  .btn-outline {
+    background: transparent; color: var(--blue);
+    border: 2px solid var(--blue); border-radius: 8px;
+    padding: 11px 24px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all .2s;
+  }
+  .btn-outline:hover { background: var(--blue-light); }
+  .hero-image { flex: 1; display: flex; justify-content: center; align-items: center; }
+  .hero-graphic {
+    width: clamp(240px, 35vw, 420px);
+    height: clamp(240px, 35vw, 420px);
+    background: var(--white);
+    border-radius: 50%;
+    box-shadow: 0 20px 60px rgba(59,158,222,.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: clamp(6rem, 12vw, 10rem);
+  }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 5.5rem 6vw; }
+  .section-label { font-size: .78rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--blue); margin-bottom: .6rem; }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--text-dark); margin-bottom: 1rem; }
+  .section-sub { font-size: 1rem; color: var(--text-mid); max-width: 500px; margin-bottom: 3rem; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--white); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--blue-light);
+    border: 1.5px solid var(--blue-mid);
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    transition: box-shadow .2s, transform .2s;
+    cursor: default;
+  }
+  .service-card:hover { box-shadow: 0 8px 32px rgba(59,158,222,.14); transform: translateY(-3px); }
+  .service-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  .service-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: .5rem; }
+  .service-card p { font-size: .9rem; color: var(--text-mid); }
+
+  /* ── ABOUT ── */
+  #about { background: var(--blue-light); }
+  .about-inner { display: flex; gap: 4rem; align-items: center; flex-wrap: wrap; }
+  .about-text { flex: 1; min-width: 280px; }
+  .about-text p { font-size: 1.02rem; color: var(--text-mid); margin-bottom: 1.2rem; }
+  .about-stats { flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-card {
+    background: var(--white); border-radius: var(--radius); padding: 1.4rem 1.6rem;
+    text-align: center; border: 1.5px solid var(--blue-mid);
+  }
+  .stat-num { font-size: 2rem; font-weight: 800; color: var(--blue); }
+  .stat-label { font-size: .82rem; color: var(--text-mid); margin-top: .2rem; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .contact-card {
+    background: var(--blue-light); border: 1.5px solid var(--blue-mid);
+    border-radius: var(--radius); padding: 1.8rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .contact-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .contact-card h4 { font-size: .82rem; text-transform: uppercase; letter-spacing: .5px; color: var(--blue); font-weight: 700; margin-bottom: .3rem; }
+  .contact-card p { font-size: .93rem; color: var(--text-mid); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text-dark); color: #a0b0c0;
+    text-align: center; padding: 1.8rem 6vw; font-size: .88rem;
+  }
+  footer strong { color: #fff; }
+
+  /* ── CHATBOT ── */
+  #chat-btn {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--blue); border: none; cursor: pointer;
+    box-shadow: 0 6px 24px rgba(59,158,222,.5);
+    font-size: 1.5rem; color: #fff; transition: transform .2s, box-shadow .2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #chat-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(59,158,222,.6); }
+
+  #chat-window {
+    position: fixed; bottom: 100px; right: 28px; z-index: 999;
+    width: 340px; max-width: calc(100vw - 40px);
+    background: var(--white); border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.15);
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: scale(0.85) translateY(20px); opacity: 0;
+    pointer-events: none; transform-origin: bottom right;
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  #chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+
+  .chat-header {
+    background: var(--blue); color: #fff;
+    padding: 14px 18px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .chat-header-info { display: flex; align-items: center; gap: 10px; }
+  .chat-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,.25); display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+  }
+  .chat-title { font-weight: 700; font-size: .95rem; }
+  .chat-subtitle { font-size: .75rem; opacity: .85; }
+  #chat-close { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; opacity: .8; line-height: 1; }
+  #chat-close:hover { opacity: 1; }
+
+  #chat-messages {
+    flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px;
+    min-height: 260px; max-height: 340px;
+  }
+  .msg { max-width: 85%; font-size: .88rem; line-height: 1.5; }
+  .msg.bot { align-self: flex-start; }
+  .msg.user { align-self: flex-end; }
+  .msg-bubble {
+    padding: 9px 13px; border-radius: 14px;
+    display: inline-block; word-break: break-word;
+  }
+  .msg.bot .msg-bubble { background: var(--blue-light); color: var(--text-dark); border-bottom-left-radius: 4px; }
+  .msg.user .msg-bubble { background: var(--blue); color: #fff; border-bottom-right-radius: 4px; }
+
+  #chat-options { padding: 10px 16px 4px; display: flex; flex-direction: column; gap: 7px; }
+  .chat-opt {
+    background: var(--blue-light); border: 1.5px solid var(--blue-mid);
+    border-radius: 8px; padding: 9px 14px; font-size: .85rem; color: var(--blue);
+    font-weight: 600; cursor: pointer; text-align: left; transition: background .15s;
+  }
+  .chat-opt:hover { background: var(--blue-mid); }
+
+  #chat-input-area {
+    padding: 12px 14px; border-top: 1px solid #e2edf7; display: flex; gap: 8px;
+  }
+  #chat-input {
+    flex: 1; border: 1.5px solid var(--blue-mid); border-radius: 8px;
+    padding: 8px 12px; font-size: .88rem; outline: none; color: var(--text-dark);
+    font-family: inherit;
+  }
+  #chat-input:focus { border-color: var(--blue); }
+  #chat-send {
+    background: var(--blue); color: #fff; border: none;
+    border-radius: 8px; padding: 8px 14px; cursor: pointer; font-size: .85rem; font-weight: 600;
+    transition: background .15s;
+  }
+  #chat-send:hover { background: #2a8dcf; }
+  #chat-send:disabled { background: #b0cde8; cursor: default; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Smile<span>Care</span> Dental</div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openChat()">Book Appointment</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <div class="hero-badge">Trusted Since 2005</div>
+    <h1>Your Trusted<br /><span>Dental Care</span> Partner</h1>
+    <p>World-class dental care with a gentle touch. We make every visit comfortable, affordable, and stress-free for the whole family.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openChat()">Book Appointment</button>
+      <button class="btn-outline" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Our Services</button>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="hero-graphic">🦷</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What We Offer</div>
+  <div class="section-title">Our Services</div>
+  <div class="section-sub">Comprehensive dental care tailored to your needs.</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🧹</div>
+      <h3>Teeth Cleaning</h3>
+      <p>Professional cleaning to remove plaque and tartar, leaving your smile fresh and healthy.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🩺</div>
+      <h3>Tooth Pain Treatment</h3>
+      <p>Quick and effective relief for toothaches, infections, and dental emergencies.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">😬</div>
+      <h3>Braces</h3>
+      <p>Traditional and clear aligner options to straighten your teeth at any age.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <h3>Whitening</h3>
+      <p>Professional-grade teeth whitening for a brighter, more confident smile.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-text">
+      <div class="section-label">Who We Are</div>
+      <div class="section-title">About SmileCare</div>
+      <p>At SmileCare Dental, we believe a healthy smile changes everything. Founded in 2005, our team of experienced dentists and hygienists is dedicated to providing gentle, patient-first care in a welcoming environment. We combine the latest technology with a warm, personal approach to ensure every patient feels at ease — from routine cleanings to complex treatments.</p>
+      <p>Whether you're visiting us for the first time or you've been with us for years, you'll always be treated like family.</p>
+      <button class="btn-primary" onclick="openChat()">Meet the Team</button>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-num">18+</div><div class="stat-label">Years of Care</div></div>
+      <div class="stat-card"><div class="stat-num">5k+</div><div class="stat-label">Happy Patients</div></div>
+      <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Expert Dentists</div></div>
+      <div class="stat-card"><div class="stat-num">4.9★</div><div class="stat-label">Patient Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <div class="section-title">Contact Us</div>
+  <div class="section-sub">We'd love to hear from you. Reach out to schedule or ask a question.</div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon">📍</div>
+      <div>
+        <h4>Address</h4>
+        <p>42 Orchard Street, Indiranagar,<br />Bengaluru, Karnataka 560038</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">📞</div>
+      <div>
+        <h4>Phone</h4>
+        <p>+91 98765 43210<br />Mon–Sat, 9 AM – 7 PM</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">✉️</div>
+      <div>
+        <h4>Email</h4>
+        <p>hello@smilecaredental.in<br />We reply within 24 hours</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>SmileCare Dental</strong> &mdash; Bengaluru &copy; 2024. All rights reserved.
+</footer>
+
+<!-- CHATBOT BUTTON -->
+<button id="chat-btn" onclick="toggleChat()" title="Chat with us">💬</button>
+
+<!-- CHATBOT WINDOW -->
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-avatar">🦷</div>
+      <div>
+        <div class="chat-title">SmileCare Assistant</div>
+        <div class="chat-subtitle">Online now</div>
+      </div>
+    </div>
+    <button id="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div id="chat-messages"></div>
+  <div id="chat-options"></div>
+  <div id="chat-input-area">
+    <input id="chat-input" type="text" placeholder="Type here…" onkeydown="if(event.key==='Enter') sendUserText()" />
+    <button id="chat-send" onclick="sendUserText()" disabled>Send</button>
+  </div>
+</div>
+
+<script>
+  const state = {
+    step: 0,
+    service: '',
+    urgent: '',
+    name: '',
+    email: '',
+  };
+
+  const slots = ['Tomorrow, 10:00 AM', 'Tomorrow, 2:30 PM', 'Friday, 11:00 AM'];
+
+  const messagesEl = document.getElementById('chat-messages');
+  const optionsEl  = document.getElementById('chat-options');
+  const inputEl    = document.getElementById('chat-input');
+  const sendBtn    = document.getElementById('chat-send');
+  const chatWin    = document.getElementById('chat-window');
+
+  function openChat() {
+    if (!chatWin.classList.contains('open')) toggleChat();
+  }
+
+  function toggleChat() {
+    chatWin.classList.toggle('open');
+    if (chatWin.classList.contains('open') && state.step === 0) {
+      initChat();
+    }
+  }
+
+  function initChat() {
+    state.step = 1;
+    addBotMsg('Hi there! 👋 Welcome to SmileCare Dental. How can we help you today?');
+    setTimeout(() => {
+      addBotMsg('Please choose a service you need:');
+      showOptions([
+        { label: '🩺 Tooth Pain', value: 'Tooth Pain' },
+        { label: '🧹 Cleaning',   value: 'Cleaning'  },
+        { label: '😬 Braces',     value: 'Braces'    },
+      ], pickService);
+    }, 500);
+  }
+
+  function addBotMsg(text) {
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.innerHTML = `<div class="msg-bubble">${text}</div>`;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addUserMsg(text) {
+    const div = document.createElement('div');
+    div.className = 'msg user';
+    div.innerHTML = `<div class="msg-bubble">${text}</div>`;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function clearOptions() { optionsEl.innerHTML = ''; }
+
+  function showOptions(opts, handler) {
+    clearOptions();
+    opts.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'chat-opt';
+      btn.textContent = opt.label;
+      btn.onclick = () => handler(opt.value, opt.label);
+      optionsEl.appendChild(btn);
+    });
+    setInputMode(false);
+  }
+
+  function setInputMode(active) {
+    inputEl.disabled = !active;
+    sendBtn.disabled = !active;
+    if (active) { inputEl.placeholder = 'Type here…'; inputEl.focus(); }
+    else { inputEl.placeholder = 'Choose an option above…'; }
+  }
+
+  function pickService(val, label) {
+    state.service = val;
+    addUserMsg(label);
+    clearOptions();
+    state.step = 2;
+    setTimeout(() => {
+      addBotMsg(`Got it — <strong>${val}</strong>. Is this urgent?`);
+      showOptions([
+        { label: '🚨 Yes, it\'s urgent', value: 'Yes' },
+        { label: '🗓️ No, just scheduling', value: 'No' },
+      ], pickUrgency);
+    }, 400);
+  }
+
+  function pickUrgency(val, label) {
+    state.urgent = val;
+    addUserMsg(label);
+    clearOptions();
+    state.step = 3;
+    setTimeout(() => {
+      if (val === 'Yes') addBotMsg('Understood! We\'ll prioritize you. Let\'s get your details.');
+      addBotMsg('What\'s your <strong>full name</strong>?');
+      setInputMode(true);
+    }, 400);
+  }
+
+  function sendUserText() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    inputEl.value = '';
+
+    if (state.step === 3) {
+      state.name = text;
+      addUserMsg(text);
+      setInputMode(false);
+      state.step = 4;
+      setTimeout(() => {
+        addBotMsg(`Nice to meet you, <strong>${state.name}</strong>! 😊`);
+        addBotMsg('What\'s your <strong>email address</strong> so we can send a confirmation?');
+        setInputMode(true);
+      }, 400);
+
+    } else if (state.step === 4) {
+      state.email = text;
+      addUserMsg(text);
+      setInputMode(false);
+      state.step = 5;
+      setTimeout(() => {
+        addBotMsg('Great! Here are our available time slots:');
+        showOptions(
+          slots.map(s => ({ label: '🕐 ' + s, value: s })),
+          pickSlot
+        );
+      }, 400);
+    }
+  }
+
+  function pickSlot(val, label) {
+    addUserMsg(label);
+    clearOptions();
+    setInputMode(false);
+    state.step = 6;
+    setTimeout(() => {
+      addBotMsg(`
+        ✅ <strong>Booking Confirmed!</strong><br /><br />
+        📋 <strong>Service:</strong> ${state.service}<br />
+        👤 <strong>Name:</strong> ${state.name}<br />
+        📧 <strong>Email:</strong> ${state.email}<br />
+        🕐 <strong>Slot:</strong> ${val}<br />
+        ${state.urgent === 'Yes' ? '🚨 <strong>Priority:</strong> Urgent<br />' : ''}
+        <br />We'll send a confirmation to your email. See you soon! 😊
+      `);
+      addBotMsg('Is there anything else we can help you with?');
+      setTimeout(() => {
+        showOptions([
+          { label: '🔄 Book another appointment', value: 'restart' },
+          { label: '✕ No, thanks!',               value: 'close'   },
+        ], endAction);
+      }, 400);
+    }, 400);
+  }
+
+  function endAction(val, label) {
+    addUserMsg(label);
+    clearOptions();
+    if (val === 'restart') {
+      Object.assign(state, { step: 0, service: '', urgent: '', name: '', email: '' });
+      messagesEl.innerHTML = '';
+      setTimeout(initChat, 300);
+    } else {
+      addBotMsg('Thank you for choosing SmileCare Dental. Have a great day! 😊🦷');
+    }
+  }
+</script>
+</body>
+</html>
