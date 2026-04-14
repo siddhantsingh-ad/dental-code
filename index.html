@@ -496,6 +496,20 @@
     setInputMode(false);
     state.step = 6;
     setTimeout(() => {
+      // Send data to Make webhook
+      fetch("https://hook.eu1.make.com/3ve9sufkobfr5iy6fu4qc32rku86km2m", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: state.name,
+          email: state.email,
+          service: state.service,
+          urgent: state.urgent,
+          slot: val
+        })
+      }).catch(err => console.error("Webhook error:", err));
       addBotMsg(`
         ✅ <strong>Booking Confirmed!</strong><br /><br />
         📋 <strong>Service:</strong> ${state.service}<br />
